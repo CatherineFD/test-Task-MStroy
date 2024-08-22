@@ -10,6 +10,9 @@ var TreeStore = /** @class */ (function () {
     };
     TreeStore.prototype.getItem = function (id) {
         var foundItem = this.treeStore.find(function (obj) { return obj.id == id; });
+        if (!foundItem) {
+            throw new Error('Item not found');
+        }
         return foundItem;
     };
     TreeStore.prototype.getChildren = function (id) {
@@ -45,20 +48,3 @@ var TreeStore = /** @class */ (function () {
     return TreeStore;
 }());
 exports.TreeStore = TreeStore;
-var items = [
-    { id: 1, parent: 'root' },
-    { id: 2, parent: 1, type: 'test' },
-    { id: 3, parent: 1, type: 'test' },
-    { id: 4, parent: 2, type: 'test' },
-    { id: 5, parent: 2, type: 'test' },
-    { id: 6, parent: 2, type: 'test' },
-    { id: 7, parent: 4, type: null },
-    { id: 8, parent: 4, type: null },
-];
-var store = new TreeStore(items);
-console.log(store.getAll());
-console.log(store.getItem(7));
-console.log(store.getChildren(5));
-console.log(store.getChildren(2));
-console.log(store.getAllChildren(2));
-console.log(store.getAllParents(7));
